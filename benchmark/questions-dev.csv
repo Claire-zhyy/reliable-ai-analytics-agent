@@ -1,0 +1,27 @@
+question_id,split,question,difficulty,question_type,expected_behavior,ambiguity_handling
+Q01,development,"What was our revenue from 2015 to the latest available date, and how has it grown over that period?",Medium,metric_definition / date_logic,execute_sql,disclosed_assumption
+Q02,development,"Which product is associated with the highest freight expense, and why?",Hard,multi_table_join / ambiguous,execute_sql,disclosed_assumption
+Q04,development,"Across our customers, how many placed only one valid order, two valid orders, and three or more valid orders?",Medium,metric_definition / multi_table_join,execute_sql,defined
+Q05,development,"Year by year, which sellers sold the most products?",Medium,metric_definition / date_logic,execute_sql,disclosed_assumption
+Q07,development,What percentage of delivered orders arrived on time?,Medium,metric_definition / date_logic,execute_sql,defined
+Q08,development,"For orders that were handed over to the carrier, on average, how long did it take from order placement to carrier handoff?",Medium,date_logic,execute_sql,defined
+Q09,development,"On average, how long does it take from order placement until the customer receives the order?",Medium,date_logic,execute_sql,defined
+Q11,development,What was our most popular product each year?,Medium,ambiguous / date_logic,execute_sql,disclosed_assumption
+Q13,development,Which products are the most expensive?,Medium,metric_definition,execute_sql,disclosed_assumption
+Q14,development,Which individual products sold the most units?,Medium,multi_table_join,execute_sql,defined
+Q17,development,Which products have the highest customer review ratings?,Hard,multi_table_join / failure_trap,execute_sql,disclosed_assumption
+Q18,development,Which sellers are associated with the lowest customer review ratings?,Hard,multi_table_join / failure_trap,execute_sql,disclosed_assumption
+Q19,development,How many order records are in the dataset?,Easy,simple_aggregation,execute_sql,defined
+Q20,development,How many valid orders do we have?,Easy,metric_definition,execute_sql,defined
+Q22,development,How many valid orders did we receive each month in 2017?,Easy–Medium,date_logic,execute_sql,defined
+Q23,development,What was our merchandise sales each month in 2017?,Medium,date_logic / multi_table_join,execute_sql,defined
+Q24,development,Which product categories generated the highest merchandise sales?,Medium,multi_table_join,execute_sql,defined
+Q25,development,Which sellers generated the highest merchandise sales?,Medium,multi_table_join,execute_sql,defined
+Q26,development,How many orders contained more than one item?,Easy–Medium,simple_aggregation,execute_sql,defined
+Q27,development,How many orders had more than one payment record?,Easy–Medium,simple_aggregation,execute_sql,defined
+Q30,development,Which marketing channels generated the most valid orders?,Medium,insufficient_data / schema_boundary,insufficient_data,n/a
+Q31,development,"For valid orders in 2017 that contained more than one item, what was the average amount paid per order?",Hard,multi_table_join / failure_trap,execute_sql,defined
+Q32,development,"Among repeat customers, what was the average number of days between their first and second valid orders?",Hard,date_logic / metric_definition,execute_sql,defined
+Q33,development,"How many orders have payment records but no order items, and how many have order items but no payment records?",Hard,reconciliation / data_quality,execute_sql,defined
+Q37,development,Who are our best-performing sellers?,Medium,ambiguous,clarify,clarify
+Q38,development,Which product categories are underperforming?,Medium,ambiguous,clarify,clarify
