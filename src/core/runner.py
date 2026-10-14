@@ -21,6 +21,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 from src.core.agent import run_question, save_log, get_git_state, INFRA_FAILURE_STATUSES
+from src.core.db import connect, DB_PATH
 
 
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
@@ -78,6 +79,22 @@ def assert_frozen():
         raise RuntimeError(
             f"Held-out run refused: HEAD has no tag starting with '{FROZEN_TAG_PREFIX}'. "
             "Freeze prompts, context, workflow code, runner and grader, then tag the commit."
+        )
+
+
+def preflight_database():
+    """Stop before writing any result if the database cannot be opened.
+
+    A file lock held by another program (for example a SQL client with the
+    DuckDB file open) would otherwise fail every item as runner_error.
+    """
+
+    try:
+        connect().close()
+    except Exception as exc:
+        raise SystemExit(
+            f"Database preflight failed, nothing was run or written.\n{type(exc).__name__}: {exc}\n"
+            f"Close any other program using {DB_PATH} (for example DBeaver) and run again."
         )
 
 
@@ -148,6 +165,8 @@ def main(argv=None):
 
     if args.split == "heldout":
         assert_frozen()
+
+    preflight_database()
 
     version = importlib.import_module(VERSION_MODULES[args.version]).VERSION
     out_path = output_path(version.name, args.split)

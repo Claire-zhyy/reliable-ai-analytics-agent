@@ -49,3 +49,10 @@
 - **Held-out guard.** `--split heldout` is refused unless there are no uncommitted changes outside `results/` and HEAD carries a tag starting with `system-frozen`.
 - Also added: `requirements.txt` (adds `sqlglot==30.22.0`), `docs/06-human-in-the-loop.md`, `README.md`, `src/core/show_prompt.py` (prints a version's exact instructions and hashes).
 - Testing: simulated-API tests for every item status, repair accounting and warning delivery, the batch runner and the held-out guard, on Python 3.9 with the pinned packages. No real API call was made in testing.
+
+## 2026-10-14 — Aborted Version B start (database lock) and runner preflight
+
+- Layer: runner (infrastructure; no model-visible change)
+- Event: the first Version B development run (`B-dev-20261014T091438Z`, commit `e702519`) failed on all 26 items with `runner_error` before any model call. DBeaver held a lock on `data/olist.duckdb`, so the runner could not open the database. No response ID was recorded for any item. The Version C run did not start (same lock at import).
+- Handling: no model output exists, so this is not treated as a Version B run, and `--retry-infra` was not used. The file is retained as `results/semantic/dev_runs_aborted_db_lock_20261014T091438Z.jsonl` and excluded from evaluation. The formal Version B run starts fresh with a new run ID.
+- Change: the runner now opens the database once before loading a version or writing any result (`preflight_database`). If it cannot, it stops with a message and writes nothing.
