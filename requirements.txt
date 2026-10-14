@@ -1,0 +1,4 @@
+duckdb==1.4.5
+openai==2.48.0
+python-dotenv==1.2.1
+sqlglot==30.22.0
