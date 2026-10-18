@@ -48,7 +48,7 @@ A 4/26, B 16/26, C 19/26 fully correct. These are practice-set scores: B's conte
 
 **1. Population definition was the dominant failure, and business semantics fixed it.** In both development runs, 15 of Version A's 22 failures were wrong order populations: inventing or omitting the "valid order" definition. A also guessed a different definition from run to run (for example 98,207 vs 96,478 valid orders for the same question). B, given the documented definition, dropped development population failures to 1–2 and got all four held-out population questions right.
 
-**2. Join amplification never occurred.** The pre-registered hypothesis expected join double-counting to be a major error source. In 117 graded items it never appeared as a primary error. The failures were semantic, not mechanical.
+**2. Join amplification never occurred.** The pre-registered hypothesis expected join double-counting to be a major error source. Across all graded runs (development rounds and held-out, A, B and C), it never appeared as a primary error. The failures were semantic, not mechanical.
 
 **3. Workflow controls changed behaviour more than results.** C asked focused clarifying questions where definitions were missing (3/4 pooled vs B 1/4), stated every analytical choice (transparency 3/3 held-out, 7/7 development) and recovered from SQL errors. On held-out Q03, B and C hit the same DuckDB cast error: B stopped, and C repaired the query and answered.
 
