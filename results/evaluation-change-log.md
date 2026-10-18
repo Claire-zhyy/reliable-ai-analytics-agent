@@ -108,3 +108,9 @@
 - Wording: Q17/Q18 changes are described as consistent with the review-attribution definition, not proven by it; the C Q01 code-check event is described as a schema-check rejection repaired by C's repair path, not as preventing termination.
 - Repeatability questions selected before the held-out run: Q01, Q18, Q23, Q31, Q37 (Version C, three runs each, after held-out).
 - `benchmark/FREEZE-SHA256.txt` is the 2026-10-02 benchmark snapshot; all benchmark files still match it, and only `docs/03` differs, by the logged revision. The system freeze manifest is `results/system-freeze-sha256.txt`; freeze summary in `results/system-freeze-record.md`. Tag: `system-frozen-v1`.
+
+## 2026-10-18 — Held-out graded (Day 11)
+
+- Runs on frozen commit `4260d21` (tag `system-frozen-v1`), one attempt per item, no re-runs; prompt, context and schema hashes match the freeze; `results/system-freeze-sha256.txt` verifies 34/34.
+- Graded with the frozen standard, then independently re-verified (round 4). Corrections applied before confirmation: A Q15 behavior → False (presented an invented profit proxy instead of declining); B Q16 transparency → True (order grain, numerator and denominator stated in words); B Q28 → result fail, `other` (20.6% reported vs 20.63%, methodology §4 two-decimal rule); C Q03 note corrected (one SQL error, one repair round).
+- Result: held-out `execute_sql` fully correct A 2/10, B 5/10, C 4/10; all 13: A 2, B 7, C 7. Summary: `results/heldout-results.md`. No system, grading-rule or answer-key change follows.
