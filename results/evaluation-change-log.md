@@ -90,3 +90,21 @@
 - The Obsidian design copy (`10_Projects/job-search/ai-preparation/03-olist-business-semantics.md`) is updated to the same text.
 - Context hashes change for B and C; the new `context_hash` and `prompt_hash` values are recorded in the re-run logs.
 - **Re-run.** Per methodology §7, all 26 development questions are re-run on A, B and C. The first-round runs, grades and summaries move to `results/{baseline,semantic,improved}/dev-round1/` and `results/dev-comparison-abc-round1.md` (B drafts in `results/semantic/dev-round1/drafts/`) so the runner can write fresh `dev_runs.jsonl` files. Earlier change-log entries that cite `results/<dir>/dev_runs.jsonl` or `dev_evaluation.csv` refer to the files now under `dev-round1/`. Version A's re-run has an unchanged prompt and also serves as a descriptive repeatability observation.
+
+## 2026-10-18 — Pre-freeze development re-run graded
+
+- Runs on commit `7307052`: `A-dev-20261018T083037Z` (25 completed, 1 `sql_execution_error`), `B-dev-20261018T083414Z` and `C-dev-20261018T083658Z` (26 completed each). A's `prompt_hash` is unchanged (`7192e95c…`); B and C carry the new `context_hash` (`e9099d59…`). `git_dirty` is True only because the new run files were untracked while running.
+- Graded with the 2026-10-18 standard; no new grading decision was needed. Fully correct: A 4/26, B 17/26, C 20/26 (same totals as round 1). Over-clarification 0. One C repair (Q01, schema-check rejection repaired).
+- Effect of the review-attribution definition: Q17/Q18 grain errors (B) and over-clarifications (C) no longer occur; both still fail on threshold choice (B) or caveats and rounding before ranking (C). No further system change is made before freeze.
+- These are the pre-freeze development results required by methodology §7.
+
+## 2026-10-18 — Round-3 verification applied; system frozen
+
+- Two grades corrected after independent round-3 verification (no system change, no re-run):
+  - **B Q08** → result fail, `population_filter`: B restricted the observed carrier-handoff population to valid orders (97,583 vs 97,658). An average within tolerance does not excuse a narrowed population.
+  - **C Q24** → result fail, `other`: the answer table reports 4,325 orders for Garden Tools where the SQL returned 3,505. Methodology §4, counts must match exactly; supplementary figures in the answer are not exempt.
+- Label and note fixes: B Q02 secondary `silent_assumption` removed (that label requires a result pass); B Q18 secondary `wrong_interpretation` added (caveat omits delivery/platform experience); B Q17 note corrected (no minimum review count is applied at all).
+- Re-run totals: A 4/26, B 16/26, C 19/26. A → B: 13 fixes, 1 regression (Q08). B → C: 4 fixes (Q02, Q08, Q33, Q37), 1 regression (Q24).
+- Wording: Q17/Q18 changes are described as consistent with the review-attribution definition, not proven by it; the C Q01 code-check event is described as a schema-check rejection repaired by C's repair path, not as preventing termination.
+- Repeatability questions selected before the held-out run: Q01, Q18, Q23, Q31, Q37 (Version C, three runs each, after held-out).
+- `benchmark/FREEZE-SHA256.txt` is the 2026-10-02 benchmark snapshot; all benchmark files still match it, and only `docs/03` differs, by the logged revision. The system freeze manifest is `results/system-freeze-sha256.txt`; freeze summary in `results/system-freeze-record.md`. Tag: `system-frozen-v1`.
