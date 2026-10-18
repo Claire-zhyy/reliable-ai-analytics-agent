@@ -122,3 +122,8 @@
 - Consistency check: every graded item in the final development and held-out CSVs was reviewed; B held-out Q28 is the only item that had failed solely on displayed precision.
 - Effect: B held-out Q28 → pass. Held-out `execute_sql` fully correct: A 2/10, B 6/10, C 4/10; all 13: A 2, B 8, C 7.
 - Note on timing: this is a change made after the held-out results were visible. It is recorded here so the reader can judge it; it applies one principle across all versions and does not depend on which version benefits.
+
+## 2026-10-18 — Repeatability test run
+
+- `src/core/repeatability.py` added (commit `ceb295a`) to run the pre-registered questions; it reuses the frozen runner, agent and Version C definition without modification (freeze manifest still verifies 34/34).
+- Run `C-repeat-20261018T093723Z`: Q01, Q18, Q23, Q31, Q37 × 3 on Version C. Outcomes: Q31 3/3, Q37 3/3, Q23 0/3, Q01 0/3, Q18 0/3 (2 over-clarifications, 1 answer). Summary: `results/repeatability-results.md`. Descriptive only; no grade or system change.
