@@ -14,6 +14,14 @@ All three run through one shared loop and runner (`src/core/`), so the only diff
 
 > Held-out set locked on 2026-10-02 (benchmark v4, tag `benchmark-v4-frozen`). The 13 held-out questions were not used for tuning and are run once on all three versions after the system freeze.
 
+## Results
+
+| Held-out, fully correct (`execute_sql`, 10 questions) | A — raw schema | B — + business semantics | C — + workflow controls |
+| --- | ---: | ---: | ---: |
+| | 2/10 | 6/10 | 4/10 |
+
+Business definitions, not SQL ability, were the bottleneck. Workflow controls improved clarification, disclosure and error recovery but did not raise result accuracy on unseen questions. See [`results/final-report.md`](results/final-report.md).
+
 ## Repository layout
 
 - `benchmark/`: 39 questions (26 development / 13 held-out), answer key, reference SQL, split and freeze hashes
