@@ -6,3 +6,6 @@ __pycache__/
 .venv/
 .env
 
+
+# personal reference, not part of the project
+olist-data-dictionary.xlsx

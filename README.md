@@ -30,6 +30,21 @@ Business definitions, not SQL ability, were the bottleneck. Workflow controls im
 - `src/baseline/`, `src/semantic/`, `src/improved/`: Version A, B and C definitions
 - `results/`: run logs, grading, error analysis and the evaluation change log
 
+### What is in `results/`
+
+| Path | Status |
+| --- | --- |
+| `final-report.md`, `heldout-results.md`, `dev-comparison-abc.md`, `repeatability-results.md` | Final write-ups |
+| `{baseline,semantic,improved}/heldout_*` | Official held-out runs and grades (frozen system, one run per version) |
+| `{baseline,semantic,improved}/dev_*` | Pre-freeze development re-run and grades |
+| `improved/repeatability_runs.jsonl` | Repeatability test (5 questions × 3 runs on Version C) |
+| `*/dev-round1/`, `dev-comparison-abc-round1.md` | Development round 1, kept for comparison (superseded by the re-run) |
+| `semantic/dev-round1/drafts/` | Grading drafts before independent verification |
+| `baseline/dev_runs_invalid_repair.jsonl`, `semantic/dev_runs_aborted_db_lock_*.jsonl` | Invalid or aborted runs, excluded from scoring and kept as evidence (see change log) |
+| `baseline/runner_snapshot_*/` | Exact runner code used for the first Version A run |
+| `evaluation-change-log.md` | Every change to runner, context, rules and grading, with reasons |
+| `system-freeze-record.md`, `system-freeze-sha256.txt` | What was frozen for the held-out run |
+
 ## Running
 
 ```bash
