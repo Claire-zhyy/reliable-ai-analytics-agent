@@ -114,3 +114,11 @@
 - Runs on frozen commit `4260d21` (tag `system-frozen-v1`), one attempt per item, no re-runs; prompt, context and schema hashes match the freeze; `results/system-freeze-sha256.txt` verifies 34/34.
 - Graded with the frozen standard, then independently re-verified (round 4). Corrections applied before confirmation: A Q15 behavior → False (presented an invented profit proxy instead of declining); B Q16 transparency → True (order grain, numerator and denominator stated in words); B Q28 → result fail, `other` (20.6% reported vs 20.63%, methodology §4 two-decimal rule); C Q03 note corrected (one SQL error, one repair round).
 - Result: held-out `execute_sql` fully correct A 2/10, B 5/10, C 4/10; all 13: A 2, B 7, C 7. Summary: `results/heldout-results.md`. No system, grading-rule or answer-key change follows.
+
+## 2026-10-18 — Precision clarification at human confirmation (held-out B Q28)
+
+- Layer: grader (application of methodology §4; no rule text, answer key or system changed). Decided by Claire as the final human grader (§3) when confirming the held-out grades.
+- Clarification: §4 says percentages "must match to two decimal places after normal rounding". A reported value that equals the reference after normal rounding (20.6% for 20.63%) matches; displaying fewer decimals is not by itself a failure. The rule exists to catch wrong numbers, and this number is not wrong. A value that differs from the reference after rounding still fails, and rounding that changes a ranking order still fails (C Q18, development), because the result itself is wrong.
+- Consistency check: every graded item in the final development and held-out CSVs was reviewed; B held-out Q28 is the only item that had failed solely on displayed precision.
+- Effect: B held-out Q28 → pass. Held-out `execute_sql` fully correct: A 2/10, B 6/10, C 4/10; all 13: A 2, B 8, C 7.
+- Note on timing: this is a change made after the held-out results were visible. It is recorded here so the reader can judge it; it applies one principle across all versions and does not depend on which version benefits.

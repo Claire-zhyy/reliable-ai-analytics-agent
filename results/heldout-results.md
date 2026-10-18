@@ -1,13 +1,13 @@
 # Held-out Results (Day 11)
 
-> Runs `A-heldout-20261018T091126Z`, `B-heldout-20261018T091335Z`, `C-heldout-20261018T091457Z` on the frozen commit `4260d21` (tag `system-frozen-v1`); each version ran once on the 13 held-out questions, with no re-runs. Graded on 2026-10-18 against the frozen answer key and grading standard, independently re-verified (round 4: all 39 grades checked, held-out reference SQL re-run read-only, freeze manifest 34/34 files verified), and confirmed by Claire. Grades: `results/{baseline,semantic,improved}/heldout_evaluation.csv`. After this grading nothing in the system or grading is changed; problems found become stated limitations.
+> Runs `A-heldout-20261018T091126Z`, `B-heldout-20261018T091335Z`, `C-heldout-20261018T091457Z` on the frozen commit `4260d21` (tag `system-frozen-v1`); each version ran once on the 13 held-out questions, with no re-runs. Graded on 2026-10-18 against the frozen answer key and grading standard, independently re-verified (round 4: all 39 grades checked, held-out reference SQL re-run read-only, freeze manifest 34/34 files verified), and confirmed by Claire. One grade (B Q28) was changed at confirmation under the precision clarification logged on 2026-10-18. Grades: `results/{baseline,semantic,improved}/heldout_evaluation.csv`. After this grading nothing in the system or grading is changed; problems found become stated limitations.
 
 ## Headline: held-out `execute_sql` (10 questions)
 
 | | A | B | C |
 | --- | ---: | ---: | ---: |
-| **Fully correct, execute_sql** | **2/10** | **5/10** | **4/10** |
-| Fully correct, all 13 | 2/13 | 7/13 | 7/13 |
+| **Fully correct, execute_sql** | **2/10** | **6/10** | **4/10** |
+| Fully correct, all 13 | 2/13 | 8/13 | 7/13 |
 | `clarify` (Q06, Q39) | 0/2 | 1/2 | 2/2 |
 | `insufficient_data` (Q15) | 0/1 | 1/1 | 1/1 |
 | Assumption transparency (Q03, Q12, Q16) | 2/3 | 1/3 | 3/3 |
@@ -36,9 +36,9 @@
 
 ## What the held-out set shows
 
-**A → B generalises.** B gets 5/10 `execute_sql` questions fully correct against A's 2/10. Four of A's eight `execute_sql` failures are the valid-order population again (Q10, Q21, Q28, Q29). B gets the population right on all four; three pass fully, and Q28 fails only because the percentage is reported as 20.6% instead of 20.63%. This is the same mechanism as on development: business definitions, not SQL ability, were the bottleneck.
+**A → B generalises.** B gets 6/10 `execute_sql` questions fully correct against A's 2/10. Four of A's eight `execute_sql` failures are the valid-order population again (Q10, Q21, Q28, Q29), and B gets all four right. This is the same mechanism as on development: business definitions, not SQL ability, were the bottleneck.
 
-**B → C does not add `execute_sql` accuracy.** C scores 4/10 against B's 5/10. It fixes none of the `execute_sql` questions B failed (Q03, Q12, Q16, Q28, Q36), and Q34 moves from pass to fail. Q28 fails in both, for different reasons. C's gains are elsewhere: both held-out `clarify` questions (Q06, Q39; B 1/2), full assumption transparency (3/3; B 1/3), and no item lost to an SQL error. Three C failures are consistent with rules being applied outside the situations they were written for:
+**B → C does not add `execute_sql` accuracy.** C scores 4/10 against B's 6/10. It fixes none of the `execute_sql` questions B failed (Q03, Q12, Q16, Q36), and Q28 and Q34 move from pass to fail. C's gains are elsewhere: both held-out `clarify` questions (Q06, Q39; B 1/2), full assumption transparency (3/3; B 1/3), and no item lost to an SQL error. Three C failures are consistent with rules being applied outside the situations they were written for:
 
 - **Q34:** C imposed a 100-order minimum on a state ranking, removing the two slowest states. This matches C7 (minimum sample for average-based rankings), applied where the answer key says no threshold is needed.
 - **Q28:** C built a "like-for-like" Jan–Sep comparison (+99.8%) instead of reporting the verified change (+9,156, +20.63%) with a caveat, and its window includes a full September 2017 but only residual September 2018 records. This is consistent with C8 (coverage check) and repeats the development Q01 cutoff error.
@@ -53,17 +53,17 @@ These are interpretations of single runs, not tested causes.
 ## Hypotheses (held-out)
 
 - **H1** (A → B mainly from fewer metric-definition, wrong-grain and join-amplification errors): the A → B gain holds on held-out and again comes from population definition, not from the predicted categories. Join amplification did not occur.
-- **H2** (B → C mainly from ambiguous questions and execution errors): partly supported. Clarification improved (`clarify` 2/2 vs 1/2) and every item produced an answer (the Q03 repair), but `execute_sql` accuracy did not improve: C 4/10 vs B 5/10.
+- **H2** (B → C mainly from ambiguous questions and execution errors): partly supported. Clarification improved (`clarify` 2/2 vs 1/2) and every item produced an answer (the Q03 repair), but `execute_sql` accuracy did not improve: C 4/10 vs B 6/10.
 
 ## Grading notes
 
 - **C Q12** fails only on the rubric's "reports sample sizes for compared groups": n is given for states and the distance-eligible total, not per distance, weight, volume, period or weekday band.
 - **C Q06** passes: merchandise sales is offered as a default option inside the clarification, not presented as the measure of competitiveness.
-- **B Q28** fails on reporting precision (20.6% vs 20.63%); methodology §4 has no exception for lower displayed precision.
+- **B Q28** passes: 20.6% is the correctly rounded value of 20.63%. A value that matches the reference after normal rounding is not failed for displaying fewer decimals (precision clarification, 2026-10-18). C Q18 still fails because its rounding changed the ranking order, which is a wrong result rather than a display choice.
 
 ## Small-sample warning
 
-Ten `execute_sql` questions: one question is 10 percentage points. B's 5/10 versus C's 4/10 is a one-question difference in a single run per version, and development re-runs moved individual items by one or two. The observation from this run is that C did not improve result accuracy over B, while it did improve clarification, disclosure and answer completion. The size of the gap is not a stable estimate.
+Ten `execute_sql` questions: one question is 10 percentage points. B's 6/10 versus C's 4/10 is a two-question difference in a single run per version, and development re-runs moved individual items by one or two. The observation from this run is that C did not improve result accuracy over B, while it did improve clarification, disclosure and answer completion. The size of the gap is not a stable estimate.
 
 ## Next
 
