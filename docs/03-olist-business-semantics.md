@@ -100,6 +100,17 @@ Do not include `freight_value` in merchandise sales. Do not directly allocate `p
 
 `freight_value` is a customer-paid shipping amount, not evidence of logistics profit.
 
+### Review attribution to products and sellers
+
+Reviews are recorded at order level, while an order can contain several products and several sellers. For product-level or seller-level review analysis, use this attribution:
+
+1. Use each `review_id` that is linked to exactly one order. A `review_id` linked to more than one distinct order has ambiguous attribution and is excluded.
+2. Treat each retained `review_id` as one review. Two different `review_id` values on the same order are two reviews, even when their scores are equal; do not merge reviews by order or by score.
+3. Attribute each retained review once to each distinct product (or seller) in its order, however many item rows that product or seller has in the order.
+4. Calculate the product's or seller's review metric over the reviews attributed to it.
+
+This attribution is an association: in a multi-product or multi-seller order, an order-level review is not necessarily feedback about one specific product or seller.
+
 The dataset does not provide enough information to calculate:
 
 - seller or category profitability
