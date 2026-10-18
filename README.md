@@ -44,6 +44,7 @@ Business definitions, not SQL ability, were the bottleneck. Workflow controls im
 | `baseline/runner_snapshot_*/` | Exact runner code used for the first Version A run |
 | `evaluation-change-log.md` | Every change to runner, context, rules and grading, with reasons |
 | `system-freeze-record.md`, `system-freeze-sha256.txt` | What was frozen for the held-out run |
+| `commit-hash-map.md` | Original → published commit hashes (messages edited before publishing; file trees identical) |
 
 ## Running
 

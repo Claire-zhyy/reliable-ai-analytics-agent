@@ -1,6 +1,6 @@
 # System Freeze Record
 
-> Frozen on 2026-10-18 for the Day 11 held-out run (methodology §8). The tag `system-frozen-v1` is placed on the commit that adds this file.
+> Frozen on 2026-10-18 for the Day 11 held-out run (methodology §8). The tag `system-frozen-v1` is placed on the commit that adds this file (recorded in run logs as `4260d21`; published as `6222f78` after commit messages were edited, with an identical file tree; see `commit-hash-map.md`).
 
 ## What is frozen
 
