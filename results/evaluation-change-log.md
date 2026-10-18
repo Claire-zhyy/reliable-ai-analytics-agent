@@ -56,3 +56,25 @@
 - Event: the first Version B development run (`B-dev-20261014T091438Z`, commit `e702519`) failed on all 26 items with `runner_error` before any model call. DBeaver held a lock on `data/olist.duckdb`, so the runner could not open the database. No response ID was recorded for any item. The Version C run did not start (same lock at import).
 - Handling: no model output exists, so this is not treated as a Version B run, and `--retry-infra` was not used. The file is retained as `results/semantic/dev_runs_aborted_db_lock_20261014T091438Z.jsonl` and excluded from evaluation. The formal Version B run starts fresh with a new run ID.
 - Change: the runner now opens the database once before loading a version or writing any result (`preflight_database`). If it cannot, it stops with a message and writes nothing.
+
+## 2026-10-18 — Grading decisions applied from Version B onward
+
+- Layer: grader (application of the frozen answer key and methodology; no question, split, answer-key entry or methodology rule changed). Decided while grading Version B development, before any Version C grade was assigned, and applied identically to C.
+- **Ranking order is strict.** Rows must match "in order, with matching values" (§4). Values that are equal only after the response's own rounding are not a tie (Q18: 3.0250 vs 3.0274 reversed → fail).
+- **A missing required caveat fails `result`**, even when every number matches, and is labelled `wrong_interpretation` (Q23, consistent with A's Q23 secondary label).
+- **Disclosure is read from the answer text only.** A population or attribution applied correctly in the SQL but not stated in the response fails `assumption_transparency` (Q02, Q05 → `silent_assumption`).
+- **Rankings are graded on returned values.** A query that reaches the reference output through a different but equivalent-for-this-output mechanism passes, with the method risk in the notes (Q13). This does not apply where the answer key prescribes the computation explicitly.
+- **Review questions (Q17, Q18): each retained `review_id` must contribute once.** Collapsing distinct reviews on one order (via `DISTINCT … review_score` or an order-level average) is `wrong_grain`, even if the displayed Top N is unchanged.
+- Version B grading: draft pre-filled, independently re-verified (all 23 `execute_sql` reference queries re-run read-only), corrections adopted (Q17/Q18 primary `wrong_grain`; Q01 secondary `wrong_interpretation`). Result: fully correct 17/26. Drafts retained in `results/semantic/drafts/`.
+
+## 2026-10-18 — Version C development graded
+
+- Run `C-dev-20261014T093341Z`, graded with the 2026-10-18 standard above. Fully correct 20/26 (strict; Q38 marked REVIEW). No code check fired on any item (0 warnings, 0 SQL errors, 0 repairs). Over-clarification on Q17 and Q18.
+- A/B/C development comparison written to `results/dev-comparison-abc.md`. No context, rule, code or answer-key change has been made since the runs.
+
+## 2026-10-18 — Round-2 verification applied; Q38 decided
+
+- Q38 (Version C): graded strictly, behavior pass, result fail (`other`); C fully correct 20/26. Rule: "asks one focused clarification about the comparison baseline"; the response asks which measure to use.
+- Transparency standard clarified (no grade changed): `assumption_transparency` checks only whether each required disclosure is stated in the answer text; whether the stated basis is acceptable is judged under `result`. C Q01 = True (basis, population and purchase date stated); B Q01 = False (purchase-date attribution not clearly stated).
+- Summaries and the A/B/C comparison revised after independent round-2 verification: causal language softened to "consistent with" (single runs, no rule-level ablation); code checks described as run without warnings rather than not run; Q27 and Q17/Q18 mechanisms presented as possible explanations; Q01 corrected (A used an accepted basis); transparency changes listed in full (Q01, Q02, Q05 up; Q18 down; net +2); H2 restated as partly supported on clarification, execution repair untested.
+- No context, prompt, code, answer-key or split change.
